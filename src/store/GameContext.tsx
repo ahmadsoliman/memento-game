@@ -70,22 +70,26 @@ const GameContextProvider = ({ children }: { children: ReactNode }) => {
     }
   };
 
-  const handleNewGame = useCallback(() => {
-    setWins(0);
-    clearBadge();
+  const resetGame = () => {
     setGrid(createGrid());
     setPick1(null);
     setPick2(null);
     setDisabled(false);
+  };
+
+  const handleNewGame = useCallback(() => {
+    setWins(0);
+    clearBadge();
+    resetGame();
   }, [clearBadge]);
 
   useEffect(() => {
     const unmatched = grid.filter((card) => !card.matched);
     if (unmatched.length === 0) {
       increaseWins();
-      handleNewGame();
+      resetGame();
     }
-  }, [grid, increaseWins, handleNewGame]);
+  }, [grid, increaseWins]);
 
   const providerValue = {
     wins,

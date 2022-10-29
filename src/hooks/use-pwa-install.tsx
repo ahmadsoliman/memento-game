@@ -2,15 +2,27 @@ import { useEffect, useState } from "react";
 
 let deferredPrompt: { prompt: () => void } | null = null;
 
+const getPWADisplayMode = () => {
+  const isStandalone = window.matchMedia("(display-mode: standalone)").matches;
+  if (document.referrer.startsWith("android-app://")) {
+    return "twa";
+  }
+  // @ts-ignore
+  else if (navigator.standalone || isStandalone) {
+    return "standalone";
+  }
+  return "browser";
+};
+
 const usePWAInstall = () => {
   const [isInstalled, setIsInstalled] = useState(false);
+  const [isPWA, setIsPWA] = useState(false);
 
   useEffect(() => {
     const eventListener = (e: unknown) => {
       deferredPrompt = e as { prompt: () => void };
     };
     window.addEventListener("beforeinstallprompt", eventListener);
-
     return () => {
       window.removeEventListener("beforeinstallprompt", eventListener);
     };
@@ -23,15 +35,21 @@ const usePWAInstall = () => {
       deferredPrompt = null;
     };
     window.addEventListener("appinstalled", eventListener);
-
     return () => {
       window.removeEventListener("appinstalled", eventListener);
     };
   }, []);
 
-  const installApp = () => deferredPrompt?.prompt();
+  const installApp = () => {
+    deferredPrompt?.prompt();
+  };
 
-  return { installApp, isInstalled };
+  useEffect(() => {
+    const mode = getPWADisplayMode();
+    setIsPWA(mode === "standalone" || mode === "twa");
+  }, []);
+
+  return { installApp, isInstalled, isPWA };
 };
 
 export default usePWAInstall;

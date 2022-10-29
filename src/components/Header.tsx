@@ -4,7 +4,7 @@ import { GameContext } from "../store/GameContext";
 
 const Header = () => {
   const { wins, moves, bestMoves, handleNewGame } = useContext(GameContext);
-  const { installApp, isInstalled } = usePWAInstall();
+  const { installApp, isInstalled, isPWA } = usePWAInstall();
   const [cancelled, setCancelled] = useState(false);
 
   // Update page title with win count
@@ -12,11 +12,15 @@ const Header = () => {
     document.title = `${wins} wins`;
   }, [wins]);
 
+  const installAppHandler = () => {
+    installApp();
+    setCancelled(true);
+  }
   return (
     <>
-      {!isInstalled && !cancelled && (
+      {!isInstalled && !cancelled && !isPWA && (
         <div className="install-app-notification">
-          <span onClick={() => installApp}>Install App</span>
+          <span onClick={installAppHandler}>Install App</span>
           <span className="cancel" onClick={() => setCancelled(true)}>
             X
           </span>

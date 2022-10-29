@@ -47,6 +47,11 @@ body {
   font-family: var(--font-family);
 }
 
+.break {
+  flex-basis: 100%;
+  height: 0;
+}
+
 /* ========= Menu ======================== */
 .install-app-notification {
   width: 100vw;
@@ -62,32 +67,34 @@ body {
   font-weight: 700;
   opacity: 0.9;
   animation: enter-left 1000ms ease 1000ms backwards;
+  cursor: pointer;
+  z-index: 1000;
 }
 
 .install-app-notification .cancel {
   float: right;
-  cursor: pointer;
-  z-index: 10;
 }
 
 header {
   width: 100%;
-  height: 4rem;
+  height: auto;
   display: flex;
+  flex-wrap: wrap;
   padding: 0.5rem;
   align-items: center;
   background: var(--card);
   box-shadow: var(--shadow);
   border-radius: var(--radius);
   animation: var(--card-enter);
-  justify-content: space-evenly;
+  justify-content: space-between;
+  row-gap: 4px;
 }
 h2 {
-  margin: auto;
+  margin: auto 1rem;
   color: var(--text);
 }
 h4 {
-  margin: auto;
+  margin: auto 1rem;
   color: var(--orange);
 }
 button {
@@ -95,16 +102,11 @@ button {
   outline: none;
   padding: 0.5rem;
   border-radius: 3px;
-  margin: auto;
+  margin: auto 1rem;
   cursor: pointer;
 }
 button.new-game-btn {
   background: var(--orange);
-  font-weight: bold;
-}
-button.install-btn {
-  background: var(--bg);
-  color: var(--card);
   font-weight: bold;
 }
 /* ========= Grid ========================= */

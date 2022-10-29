@@ -36,7 +36,7 @@ const GameContextProvider = ({ children }: { children: ReactNode }) => {
   }>(null);
 
   const [setBadge, clearBadge] = useAppBadge();
-
+  
   const increaseWins = useCallback(() => {
     setWins((oldWins) => oldWins + 1);
     setBadge();

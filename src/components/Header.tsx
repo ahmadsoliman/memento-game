@@ -1,6 +1,7 @@
-import { useContext, useEffect, useState } from "react";
-import usePWAInstall from "../hooks/use-pwa-install";
-import { GameContext } from "../store/GameContext";
+import { useContext, useEffect, useState } from 'react';
+import usePWAInstall from '../hooks/use-pwa-install';
+import { GameContext } from '../store/GameContext';
+import { withSourceCode } from 'react-source-code';
 
 const Header = () => {
   const { wins, moves, bestMoves, handleNewGame } = useContext(GameContext);
@@ -15,23 +16,23 @@ const Header = () => {
   const installAppHandler = () => {
     installApp();
     setCancelled(true);
-  }
+  };
   return (
     <>
       {!isInstalled && !cancelled && !isPWA && (
-        <div className="install-app-notification">
+        <div className='install-app-notification'>
           <span onClick={installAppHandler}>Install App</span>
-          <span className="cancel" onClick={() => setCancelled(true)}>
+          <span className='cancel' onClick={() => setCancelled(true)}>
             X
           </span>
         </div>
       )}
-      <header className="header">
+      <header className='header'>
         <h2>Memory Game</h2>
-        <button className="new-game-btn" onClick={handleNewGame}>
+        <button className='new-game-btn' onClick={handleNewGame}>
           New Game
         </button>
-        <div className="break"></div>
+        <div className='break'></div>
         <h4>{moves} moves</h4>
         {bestMoves && <h4>Least moves: {bestMoves}</h4>}
         <h4>{wins} wins</h4>
@@ -40,4 +41,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default withSourceCode(Header, 'src/components/Header');

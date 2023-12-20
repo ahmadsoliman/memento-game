@@ -1,12 +1,13 @@
-import { useContext } from "react";
-import { GameContext } from "../store/GameContext";
-import Card from "./Card";
+import { useContext } from 'react';
+import { GameContext } from '../store/GameContext';
+import Card from './Card';
+import { withSourceCode } from 'react-source-code';
 
-const Grid = () => {
+const Grid = withSourceCode(() => {
   const { grid, pick1, pick2, cardClickedHandler } = useContext(GameContext);
 
   return (
-    <div className="grid">
+    <div className='grid'>
       {grid.map((card, index) => {
         const { id, image, matched } = card;
 
@@ -23,6 +24,6 @@ const Grid = () => {
       })}
     </div>
   );
-};
+});
 
 export default Grid;
